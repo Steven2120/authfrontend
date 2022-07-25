@@ -1,51 +1,47 @@
-import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React from "react";
+import { useState } from "react";
 import { loginUser } from "../Auth";
+import { useNavigate } from "react-router-dom";
 
-export const LoginPage = (isAuthLoading) => {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+const LoginPage = ({ isAuthLoading, setIsAuthLoading }) => {
+  const [username, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   return (
     <div>
-      LoginPage
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => {
-            const newUserName = event.target.value;
-            setUsername(newUserName);
-          }}
-        ></input>
-        <br />
-        <br />
-        <label>Password:</label>
-        <input
-          type="text"
-          value={password}
-          onChange={(event) => {
-            const newPassword = event.target.value;
-            setPassword(newPassword);
-          }}
-        ></input>
-        <button
-          id="login"
-          type="submit"
-          onClick={async (isAuthLoading, setIsAuthLoading) => {
-            setIsAuthLoading(true);
-            const isUserLoggedIn = await loginUser(username, password);
-            if (isUserLoggedIn) {
-              setIsAuthLoading(false);
-              navigate("/");
-            }
-          }}
-        >
-          Login
-        </button>
-      </div>
+      <h1>LoginPage</h1>
+      <label>USER NAME: </label>
+      <input
+        value={username}
+        onChange={(e) => {
+          setUserName(e.target.value);
+          console.log(setUserName);
+        }}
+      ></input>
+      <label>PASSWORD: </label>
+      <input
+        value={password}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          console.log(setPassword);
+        }}
+      ></input>
+      <button
+        onClick={async () => {
+          setIsAuthLoading(true);
+          const isUserLoggedIn = await loginUser(username, password);
+          setIsAuthLoading(false);
+          if (isUserLoggedIn) {
+            navigate("/");
+          }
+          alert(
+            "Your username and/or password is incorrect. Please Try again!!!"
+          );
+        }}
+      >
+        Log In
+      </button>
     </div>
   );
 };

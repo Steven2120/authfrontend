@@ -1,54 +1,51 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { registerUser, loginUser } from "../Auth";
+import { useNavigate } from "react-router-dom";
+import React from "react";
 
-export const RegistrationPage = (props) => {
-  const [username, setUsername] = useState("");
+const RegistrationPage = (props) => {
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   return (
     <div>
-      RegistrationPage
-      <div>
-        <label>Username:</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(event) => {
-            const newUserName = event.target.value;
-            setUsername(newUserName);
-          }}
-        ></input>
-        <br />
-        <br />
-        <label>Password:</label>
-        <input
-          type="text"
-          value={password}
-          onChange={(event) => {
-            const newPassword = event.target.value;
-            setPassword(newPassword);
-          }}
-        ></input>
-        <button
-          id="signup"
-          type="submit"
-          onClick={async (isAuthLoading, setIsAuthLoading) => {
-            setIsAuthLoading(true);
-            const isUserRegistered = await registerUser(username, password);
-            if (isUserRegistered) {
-              const isUserLoggedIn = await loginUser(username, password);
-              if (isUserLoggedIn) {
-                props.setIsAuthLoading(false);
-                navigate("/");
-              }
+      <h2>Registration Page</h2>
+      <label>USER NAME: </label>
+      <input
+        value={username}
+        onChange={(e) => {
+          const inputUserName = e.target.value;
+          setUserName(inputUserName);
+          console.log(inputUserName);
+        }}
+      ></input>
+      <br></br>
+      <label>Password: </label>
+      <input
+        value={password}
+        onChange={(e) => {
+          const inputUserPassword = e.target.value;
+          setPassword(inputUserPassword);
+          console.log(inputUserPassword);
+        }}
+      ></input>
+      <br></br>
+      <button
+        onClick={async () => {
+          props.setIsAuthLoading(true);
+          console.log("USERNAME: ", username, "PASSWORD: ", password);
+          const isUserRegistered = await registerUser(username, password);
+          if (isUserRegistered) {
+            const isUserLoggedIn = await loginUser(username, password);
+            if (isUserLoggedIn) {
+              props.setIsAuthLoading(false);
+              navigate("/");
             }
-          }}
-        >
-          Signup
-        </button>
-      </div>
+          }
+        }}
+      >
+        Signup
+      </button>
     </div>
   );
 };

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Outlet, Link } from "react-router-dom";
-import { getUserToken } from "../Auth";
-import { logoutUser } from "../Auth";
+import { getUserToken, logoutUser } from "../Auth";
+import { useState, useEffect } from "react";
 
-export const Navbar = (isAuthLoading, setIsAuthLoading) => {
+const NavBar = (props) => {
   const [userToken, setUserToken] = useState("");
 
   useEffect(() => {
     const localUserToken = getUserToken();
     setUserToken(localUserToken);
-  }, [isAuthLoading]);
-
+  }, [props.isAuthLoading]);
   return (
     <div>
       <nav>
@@ -20,29 +19,34 @@ export const Navbar = (isAuthLoading, setIsAuthLoading) => {
             <Link to="/">Home</Link>
           </li>
           {!userToken && (
-            <div>
+            <>
               <li>
                 <Link to="/login">Login</Link>
               </li>
               <li>
                 <Link to="/registration">Registration</Link>
               </li>
-            </div>
+            </>
           )}
         </ul>
         {userToken && (
-          <div>
+          <>
             <span>
               <strong>You Are Logged In</strong>
             </span>
+            <br />
             <button
-              onClick={() => {
-                logoutUser();
+              onClick={async () => {
+                props.setIsAuthLoading(true);
+                const logoutSuccess = await logoutUser();
+                if (logoutSuccess) {
+                  props.setIsAuthLoading(false);
+                }
               }}
             >
               Logout
             </button>
-          </div>
+          </>
         )}
       </nav>
       <Outlet />
@@ -50,4 +54,4 @@ export const Navbar = (isAuthLoading, setIsAuthLoading) => {
   );
 };
 
-export default Navbar;
+export default NavBar;

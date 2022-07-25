@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
-import Auth from "./Auth";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import Navbar from "./components/Navbar";
 import "./App.css";
 
 function App() {
