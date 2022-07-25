@@ -2,7 +2,7 @@ import React from "react";
 const urlEndpoint = process.env.REACT_APP_URL_ENDPOINT;
 
 export const registerUser = async (username, password) => {
-  fetch(`${urlEndpoint}/auth/register-user`, {
+  const response = await fetch(`${urlEndpoint}/auth/register-user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const registerUser = async (username, password) => {
 };
 
 export const loginUser = async (username, password) => {
-  fetch(`${urlEndpoint}/auth/login-user`, {
+  const response = await fetch(`${urlEndpoint}/auth/login-user`, {
     method: "POST",
     headers: {
       "content-Type": "application/json",

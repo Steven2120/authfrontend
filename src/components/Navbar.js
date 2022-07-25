@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
-import { Routes, Route } from "react-router-dom";
 import { getUserToken } from "../Auth";
 import { logoutUser } from "../Auth";
 
